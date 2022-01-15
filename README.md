@@ -1,6 +1,7 @@
 # Cart Backend
 
 REST API built with Django/Django Rest Framework. API uses Celery and Redis as celery Broker for asynchrous tasks.
+Backed uses SQLITE Database for datastorage.
 
 ### Installation
 
@@ -22,4 +23,16 @@ REST API built with Django/Django Rest Framework. API uses Celery and Redis as c
    ```
    python manage.py migrate
    ```
-   
+
+6. Start Server
+   ```
+   python manage.py runserver
+   ```
+
+7. Access API endpoints via swagger docs at
+   http://localhost:8000/
+
+8. To run Tests
+   ```
+   python manage.py test
+   ```
