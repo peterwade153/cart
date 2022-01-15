@@ -12,3 +12,5 @@ class ConversationSerializer(serializers.ModelSerializer):
             'chats'
         ] + read_only_fields
 
+    
+
