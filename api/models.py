@@ -34,7 +34,7 @@ class Store(BaseModel):
     
 
 class Discount(BaseModel):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    store_id = models.ForeignKey(Store, on_delete=models.CASCADE)
     discount_code = models.CharField(max_length=32)
 
 # Operator group choices
@@ -43,12 +43,12 @@ B = 'B'
 operator_group_choices = ((A, 'A'), (B, 'B'))
 
 class Operator(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     operator_group = models.CharField(max_length=10, choices=operator_group_choices)
 
 
 class Client(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     timezone = models.CharField(max_length=32, choices=all_timezones_choices)
     phone_number = models.CharField(validators=[phone_regex], max_length=15)
 
@@ -58,19 +58,19 @@ SENT = 'SENT'
 status_choices = ((NEW, 'NEW'), (SENT, 'SENT'))
 
 class Conversation(BaseModel):
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
+    store_id = models.ForeignKey(Store, on_delete=models.CASCADE)
+    client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
+    operator_id = models.ForeignKey(Operator, on_delete=models.CASCADE)
     status = models.CharField(max_length=32, choices=status_choices, default=NEW)
 
 
 class Chat(BaseModel):
-    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    conversation_id = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     payload = models.CharField(max_length=300, validators=[payload_regex])
-    discount = models.ForeignKey(Discount, on_delete=models.CASCADE)
+    discount_id = models.ForeignKey(Discount, on_delete=models.CASCADE)
     status = models.CharField(max_length=32, choices=status_choices)
 
 
 class Schedule(BaseModel):
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    chat_id = models.ForeignKey(Chat, on_delete=models.CASCADE)
     sending_date = models.DateField()
