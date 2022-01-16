@@ -135,3 +135,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# celery config
+BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
