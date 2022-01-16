@@ -14,7 +14,7 @@ phone_regex = RegexValidator(
 )
 
 payload_regex = RegexValidator(
-    regex=r'^[a-zA-Z0-9{}$%_-\/~@#$%^&()!?]$',
+    regex=r'^[a-zA-Z0-9{}$%_\-\/~@#$%^&()!?]$',
     message='Payload had invalid characters',
     code='Invalid payload'
 )
@@ -68,8 +68,6 @@ class Conversation(BaseModel):
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
     status = models.CharField(max_length=32, choices=conversation_choices, default=PENDING)
 
-    def __str__(self) -> str:
-        return self.store
 
 # Status choices
 NEW = 'NEW'
@@ -80,7 +78,7 @@ class Chat(BaseModel):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
     payload = models.CharField(max_length=300, validators=[payload_regex])
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE)
-    status = models.CharField(max_length=32, choices=status_choices)
+    status = models.CharField(max_length=32, choices=status_choices, default=NEW)
 
 
 class Schedule(BaseModel):
