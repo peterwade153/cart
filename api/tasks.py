@@ -12,7 +12,7 @@ def send_chat():
         chat__status='NEW',
         sending_date=date.today()
     ).values_list('chat', flat=True)[:90]
-    
+
     chats = Chat.objects.filter(pk__in=chat_ids)
     for chat in chats:
         chat.status = 'SENT'

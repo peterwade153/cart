@@ -6,10 +6,9 @@ from api.models import Chat, Conversation
 from api.serializers import ChatSerializer, ConversationSerializer
 
 
-class ConversationViewSet(
-    mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
-    viewsets.GenericViewSet):
+class ConversationViewSet(mixins.CreateModelMixin,
+                          mixins.RetrieveModelMixin,
+                          viewsets.GenericViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
 
@@ -25,7 +24,7 @@ class ConversationViewSet(
 
 
 class ChatViewSet(mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
-    viewsets.GenericViewSet):
+                  mixins.RetrieveModelMixin,
+                  viewsets.GenericViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer

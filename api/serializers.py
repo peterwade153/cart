@@ -7,7 +7,7 @@ from api.models import Chat, Conversation, Discount, Schedule
 class ChatSerializer(serializers.ModelSerializer):
     conversation_id = serializers.IntegerField(label='conversation')
     discount_id = serializers.IntegerField(label='discount')
-    payload = serializers.RegexField('^[a-zA-Z0-9\s}{\$%_\/~@#$%\^&.)(!?-]*$')
+    payload = serializers.RegexField('^[a-zA-Z0-9\\s}{\\$%_\\/~@#$%\\^&.)(!?-]*$')
 
     class Meta:
         model = Chat
@@ -16,7 +16,7 @@ class ChatSerializer(serializers.ModelSerializer):
             'payload',
             'conversation_id',
             'created_date',
-            'status', 
+            'status',
             'discount_id']
 
     def create(self, validated_data):
@@ -55,19 +55,19 @@ class ConversationSerializer(serializers.ModelSerializer):
     client_id = serializers.IntegerField(label='client')
     operator_group = serializers.ReadOnlyField(source='operator.operator_group')
     chats = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Conversation
         read_only_fields = ['id']
         fields = [
-            'store_id', 
-            'operator_id', 
-            'operator_group', 
-            'client_id', 
+            'store_id',
+            'operator_id',
+            'operator_group',
+            'client_id',
             'status',
             'chats'
         ] + read_only_fields
-    
+
     def get_chats(self, obj):
         chats = Chat.objects.filter(conversation=obj)
         return ChatSerializer(chats, many=True).data
