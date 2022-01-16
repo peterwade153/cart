@@ -36,3 +36,17 @@ Backed uses SQLITE Database for datastorage.
    ```
    python manage.py test
    ```
+
+9. To run the background tasks
+    - start redis server
+      ```
+      redis-server
+      ```
+    - start the celery worker 
+      ```
+      celery -A app worker -l info
+      ```
+    - start the celery beat 
+      ```
+      celery -A app beat -l info
+      ```
