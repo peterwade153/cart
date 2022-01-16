@@ -2,6 +2,7 @@
 
 REST API built with Django/Django Rest Framework. API uses Celery and Redis as celery Broker for asynchrous tasks.
 Backed uses SQLITE Database for datastorage.
+Python 3.8
 
 ### Installation
 
