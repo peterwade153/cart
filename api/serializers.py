@@ -35,15 +35,18 @@ class ChatSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def populate_payload(payload_input, conversation_id, discount_id):
-        conv = Conversation.objects.select_related(
-            'client', 'operator').get(id=conversation_id)
-        client_first_name = conv.client.user.first_name
-        operator_fullname = f'{conv.operator.user.first_name} ' + f'{conv.operator.user.last_name}'
-        discount_code = Discount.objects.get(id=discount_id).discount_code
-        payload = payload_input.replace("{{ operator.user.full_name }}", operator_fullname)
-        payload = payload.replace("{{ client.user.first_name }}", client_first_name)
-        payload = payload.replace("{{ discount.discount_code }}", discount_code)
-        return payload
+        try:
+            conv = Conversation.objects.select_related(
+                'client', 'operator').get(id=conversation_id)
+            client_first_name = conv.client.user.first_name
+            operator_fullname = f'{conv.operator.user.first_name} ' + f'{conv.operator.user.last_name}'
+            discount_code = Discount.objects.get(id=discount_id).discount_code
+            payload = payload_input.replace("{{ operator.user.full_name }}", operator_fullname)
+            payload = payload.replace("{{ client.user.first_name }}", client_first_name)
+            payload = payload.replace("{{ discount.discount_code }}", discount_code)
+            return payload
+        except (Conversation.DoesNotExist, Discount.DoesNotExist):
+            raise serializers.ValidationError('Invalid Conversation or Discount')
 
 
 class ConversationSerializer(serializers.ModelSerializer):

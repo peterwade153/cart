@@ -39,3 +39,13 @@ class ChatTestCase(BaseAPITestCase):
         }
         response = self.client.post('/api/chats/', data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_invalid_create_chat(self):
+        data = {
+            "payload": "Hello {{ client.user.first_name }}. This is {{ operator.user.full_name }}.\nHow can I help you?",
+            "conversation_id": 2,
+            "status": "NEW",
+            "discount_id": self.discount.id
+        }
+        response = self.client.post('/api/chats/', data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
