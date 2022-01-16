@@ -2,8 +2,8 @@ from django.db.utils import IntegrityError
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
-from api.models import Conversation
-from api.serializers import ConversationSerializer
+from api.models import Chat, Conversation
+from api.serializers import ChatSerializer, ConversationSerializer
 
 
 class ConversationViewSet(
@@ -22,3 +22,10 @@ class ConversationViewSet(
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class ChatViewSet(mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet):
+    queryset = Chat.objects.all()
+    serializer_class = ChatSerializer

@@ -58,19 +58,23 @@ class Client(BaseModel):
     phone_number = models.CharField(validators=[phone_regex], max_length=15)
 
 # Status choices
-NEW = 'NEW'
-SENT = 'SENT'
-status_choices = ((NEW, 'NEW'), (SENT, 'SENT'))
+PENDING = 'PENDING'
+RESOLVED = 'RESOLVED'
+conversation_choices = ((PENDING, 'PENDING'), (RESOLVED, 'RESOLVED'))
 
 class Conversation(BaseModel):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     operator = models.ForeignKey(Operator, on_delete=models.CASCADE)
-    status = models.CharField(max_length=32, choices=status_choices, default=NEW)
+    status = models.CharField(max_length=32, choices=conversation_choices, default=PENDING)
 
     def __str__(self) -> str:
         return self.store
 
+# Status choices
+NEW = 'NEW'
+SENT = 'SENT'
+status_choices = ((NEW, 'NEW'), (SENT, 'SENT'))
 
 class Chat(BaseModel):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
