@@ -50,3 +50,12 @@ Backed uses SQLITE Database for datastorage.
       ```
       celery -A app beat -l info
       ```
+
+10. Testing application.
+   - Create a superuser
+   ```
+   python manage.py createsuperuser
+   ```
+   - Start server and head over to the admin dashboard.
+   - Create Users, Clients, Stores, Operators and Discounts.
+   - Now conversations and chats can be created by visit http://localhost:8000/
