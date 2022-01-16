@@ -1,5 +1,4 @@
-from ast import operator
-from api.models import Conversation, Store
+from api.models import Conversation
 from rest_framework import status
 
 from api.tests import BaseAPITestCase
@@ -24,3 +23,7 @@ class ConversationsAPITestCase(BaseAPITestCase):
         )
         response = self.client.get(f'/api/conversations/{conversation.id}/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_non_existing_conversation(self):
+        response = self.client.get('/api/conversations/10/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

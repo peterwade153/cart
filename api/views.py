@@ -1,4 +1,4 @@
-from django.db import IntegrityError
+from django.db.utils import IntegrityError
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
@@ -18,7 +18,7 @@ class ConversationViewSet(
             return super().create(request, *args, **kwargs)
         except IntegrityError:
             return Response({
-                "message": "Failed, not existing Operator or client or store"
+                "message": "Failed, non existing Operator or client or store"
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
